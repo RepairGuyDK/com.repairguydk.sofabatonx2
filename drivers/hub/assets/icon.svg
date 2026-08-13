@@ -1,59 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <linearGradient id="sbSilver" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#f6f8fa"/>
-      <stop offset="0.5" stop-color="#e2e7ec"/>
-      <stop offset="1" stop-color="#cdd4dc"/>
-    </linearGradient>
-    <linearGradient id="sbScreen" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#18365a"/>
-      <stop offset="0.6" stop-color="#0b1220"/>
-      <stop offset="1" stop-color="#080d16"/>
-    </linearGradient>
-    <radialGradient id="sbRing" cx="0.5" cy="0.4" r="0.7">
-      <stop offset="0" stop-color="#2a2d34"/>
-      <stop offset="1" stop-color="#0c0d10"/>
-    </radialGradient>
+    <mask id="sbCut">
+      <!-- white = kept, black = cut out (transparent hole) -->
+      <rect x="195" y="28" width="122" height="456" rx="39" fill="#fff"/>
+      <!-- screen -->
+      <rect x="212" y="52" width="88" height="108" rx="13" fill="#000"/>
+      <!-- signature ring: big hole + solid centre -->
+      <circle cx="256" cy="212" r="41" fill="#000"/>
+      <circle cx="256" cy="212" r="15" fill="#fff"/>
+      <!-- nav row -->
+      <circle cx="224" cy="280" r="9" fill="#000"/>
+      <circle cx="256" cy="280" r="9" fill="#000"/>
+      <circle cx="288" cy="280" r="9" fill="#000"/>
+      <!-- volume / guide / channel -->
+      <rect x="210" y="300" width="20" height="46" rx="10" fill="#000"/>
+      <circle cx="256" cy="312" r="10" fill="#000"/>
+      <rect x="282" y="300" width="20" height="46" rx="10" fill="#000"/>
+      <circle cx="256" cy="340" r="8" fill="#000"/>
+      <!-- media row -->
+      <circle cx="224" cy="366" r="9" fill="#000"/>
+      <circle cx="256" cy="366" r="9" fill="#000"/>
+      <circle cx="288" cy="366" r="9" fill="#000"/>
+      <!-- colour keys -->
+      <rect x="210" y="392" width="20" height="12" rx="3" fill="#000"/>
+      <rect x="233" y="392" width="20" height="12" rx="3" fill="#000"/>
+      <rect x="256" y="392" width="20" height="12" rx="3" fill="#000"/>
+      <rect x="279" y="392" width="20" height="12" rx="3" fill="#000"/>
+      <!-- A / B / C -->
+      <rect x="210" y="416" width="26" height="20" rx="5" fill="#000"/>
+      <rect x="243" y="416" width="26" height="20" rx="5" fill="#000"/>
+      <rect x="276" y="416" width="26" height="20" rx="5" fill="#000"/>
+    </mask>
   </defs>
-
-  <!-- lilac edge -->
-  <rect x="189" y="22" width="134" height="468" rx="44" fill="#bcb1ec"/>
-  <!-- slim silver body -->
-  <rect x="195" y="28" width="122" height="456" rx="39" fill="url(#sbSilver)"/>
-
-  <!-- touchscreen -->
-  <rect x="210" y="50" width="92" height="112" rx="13" fill="url(#sbScreen)"/>
-  <rect x="232" y="60" width="48" height="12" rx="6" fill="#38547a"/>
-
-  <!-- signature black ring -->
-  <circle cx="256" cy="210" r="42" fill="url(#sbRing)"/>
-  <circle cx="256" cy="210" r="21" fill="url(#sbSilver)"/>
-
-  <!-- nav buttons -->
-  <circle cx="224" cy="278" r="10" fill="#b0b9c4"/>
-  <circle cx="256" cy="278" r="10" fill="#b0b9c4"/>
-  <circle cx="288" cy="278" r="10" fill="#b0b9c4"/>
-
-  <!-- volume / guide / channel -->
-  <rect x="208" y="298" width="22" height="48" rx="11" fill="#b0b9c4"/>
-  <circle cx="256" cy="310" r="11" fill="#b0b9c4"/>
-  <rect x="282" y="298" width="22" height="48" rx="11" fill="#b0b9c4"/>
-  <circle cx="256" cy="340" r="9" fill="#b0b9c4"/>
-
-  <!-- media buttons -->
-  <circle cx="224" cy="366" r="10" fill="#b0b9c4"/>
-  <circle cx="256" cy="366" r="10" fill="#b0b9c4"/>
-  <circle cx="288" cy="366" r="10" fill="#b0b9c4"/>
-
-  <!-- colour keys -->
-  <rect x="210" y="392" width="21" height="13" rx="4" fill="#e0524f"/>
-  <rect x="234" y="392" width="21" height="13" rx="4" fill="#49c06e"/>
-  <rect x="258" y="392" width="21" height="13" rx="4" fill="#edc84a"/>
-  <rect x="282" y="392" width="21" height="13" rx="4" fill="#4b8fe0"/>
-
-  <!-- A / B / C -->
-  <rect x="210" y="416" width="28" height="22" rx="6" fill="#24262c"/>
-  <rect x="242" y="416" width="28" height="22" rx="6" fill="#24262c"/>
-  <rect x="274" y="416" width="28" height="22" rx="6" fill="#24262c"/>
+  <rect x="195" y="28" width="122" height="456" rx="39" fill="#e9edf1" mask="url(#sbCut)"/>
 </svg>
