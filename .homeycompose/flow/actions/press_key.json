@@ -1,0 +1,22 @@
+{
+  "title": { "en": "Press a device key", "da": "Tryk en tast på en enhed" },
+  "titleFormatted": {
+    "en": "On [[sb_device]], press [[key]]",
+    "da": "På [[sb_device]]: tryk [[key]]"
+  },
+  "args": [
+    { "type": "device", "name": "device", "filter": "driver_id=hub" },
+    {
+      "type": "autocomplete",
+      "name": "sb_device",
+      "title": { "en": "Device", "da": "Enhed" },
+      "placeholder": { "en": "Choose a device…", "da": "Vælg en enhed…" }
+    },
+    {
+      "type": "autocomplete",
+      "name": "key",
+      "title": { "en": "Key", "da": "Tast" },
+      "placeholder": { "en": "Choose a key…", "da": "Vælg en tast…" }
+    }
+  ]
+}

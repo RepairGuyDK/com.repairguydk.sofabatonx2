@@ -1,0 +1,370 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "com.repairguydk.sofabatonx2",
+  "version": "1.0.0",
+  "compatibility": ">=12.4.0",
+  "sdk": 3,
+  "runtime": "nodejs",
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "SofaBaton X2",
+    "da": "SofaBaton X2"
+  },
+  "description": {
+    "en": "Connect your SofaBaton X2 universal remote to Homey over MQTT — control your devices from Homey and use the remote's buttons to trigger Homey Flows.",
+    "da": "Forbind din SofaBaton X2-universalfjernbetjening til Homey via MQTT — styr dine apparater fra Homey, og brug fjernbetjeningens knapper til at udløse Homey-Flows."
+  },
+  "category": [
+    "video"
+  ],
+  "tags": {
+    "en": [
+      "sofabaton",
+      "remote",
+      "universal remote",
+      "mqtt",
+      "infrared",
+      "home theater"
+    ],
+    "da": [
+      "sofabaton",
+      "fjernbetjening",
+      "universalfjernbetjening",
+      "mqtt",
+      "infrarød",
+      "hjemmebiograf"
+    ]
+  },
+  "brandColor": "#182A38",
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Fille Kirstein",
+    "email": "repairguydk@gmail.com"
+  },
+  "support": "mailto:repairguydk@gmail.com",
+  "source": "https://github.com/RepairGuyDK/com.repairguydk.sofabatonx2",
+  "flow": {
+    "triggers": [
+      {
+        "title": {
+          "en": "Any button was pressed",
+          "da": "En vilkårlig knap blev trykket"
+        },
+        "titleFormatted": {
+          "en": "Any button was pressed",
+          "da": "En vilkårlig knap blev trykket"
+        },
+        "tokens": [
+          {
+            "name": "device_name",
+            "type": "string",
+            "title": {
+              "en": "Device",
+              "da": "Enhed"
+            },
+            "example": "TV Kælder"
+          },
+          {
+            "name": "key_name",
+            "type": "string",
+            "title": {
+              "en": "Key",
+              "da": "Tast"
+            },
+            "example": "Play"
+          },
+          {
+            "name": "device_id",
+            "type": "number",
+            "title": {
+              "en": "Device ID",
+              "da": "Enheds-ID"
+            }
+          },
+          {
+            "name": "key_id",
+            "type": "number",
+            "title": {
+              "en": "Key ID",
+              "da": "Tast-ID"
+            }
+          }
+        ],
+        "id": "any_button_pressed"
+      },
+      {
+        "title": {
+          "en": "A specific button was pressed",
+          "da": "En bestemt knap blev trykket"
+        },
+        "titleFormatted": {
+          "en": "On [[sb_device]], [[key]] was pressed",
+          "da": "På [[sb_device]] blev [[key]] trykket"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "sb_device",
+            "title": {
+              "en": "Device",
+              "da": "Enhed"
+            },
+            "placeholder": {
+              "en": "Choose a device…",
+              "da": "Vælg en enhed…"
+            }
+          },
+          {
+            "type": "autocomplete",
+            "name": "key",
+            "title": {
+              "en": "Key",
+              "da": "Tast"
+            },
+            "placeholder": {
+              "en": "Choose a key…",
+              "da": "Vælg en tast…"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "device_name",
+            "type": "string",
+            "title": {
+              "en": "Device",
+              "da": "Enhed"
+            },
+            "example": "TV Kælder"
+          },
+          {
+            "name": "key_name",
+            "type": "string",
+            "title": {
+              "en": "Key",
+              "da": "Tast"
+            },
+            "example": "Play"
+          },
+          {
+            "name": "device_id",
+            "type": "number",
+            "title": {
+              "en": "Device ID",
+              "da": "Enheds-ID"
+            }
+          },
+          {
+            "name": "key_id",
+            "type": "number",
+            "title": {
+              "en": "Key ID",
+              "da": "Tast-ID"
+            }
+          }
+        ],
+        "id": "button_pressed"
+      }
+    ],
+    "actions": [
+      {
+        "title": {
+          "en": "Press a device key",
+          "da": "Tryk en tast på en enhed"
+        },
+        "titleFormatted": {
+          "en": "On [[sb_device]], press [[key]]",
+          "da": "På [[sb_device]]: tryk [[key]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hub"
+          },
+          {
+            "type": "autocomplete",
+            "name": "sb_device",
+            "title": {
+              "en": "Device",
+              "da": "Enhed"
+            },
+            "placeholder": {
+              "en": "Choose a device…",
+              "da": "Vælg en enhed…"
+            }
+          },
+          {
+            "type": "autocomplete",
+            "name": "key",
+            "title": {
+              "en": "Key",
+              "da": "Tast"
+            },
+            "placeholder": {
+              "en": "Choose a key…",
+              "da": "Vælg en tast…"
+            }
+          }
+        ],
+        "id": "press_key"
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "SofaBaton Hub",
+        "da": "SofaBaton Hub"
+      },
+      "class": "remote",
+      "capabilities": [
+        "last_button",
+        "refresh_devices"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "images": {
+        "small": "/drivers/hub/assets/images/small.png",
+        "large": "/drivers/hub/assets/images/large.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "MQTT broker",
+            "da": "MQTT-broker"
+          },
+          "children": [
+            {
+              "id": "host",
+              "type": "text",
+              "label": {
+                "en": "Broker address",
+                "da": "Broker-adresse"
+              },
+              "hint": {
+                "en": "IP of the MQTT broker the hub is connected to.",
+                "da": "IP på MQTT-brokeren som hub'en er koblet til."
+              },
+              "value": ""
+            },
+            {
+              "id": "port",
+              "type": "number",
+              "label": {
+                "en": "Port",
+                "da": "Port"
+              },
+              "min": 1,
+              "max": 65535,
+              "value": 1883
+            },
+            {
+              "id": "mac",
+              "type": "text",
+              "label": {
+                "en": "Hub MAC address",
+                "da": "Hub MAC-adresse"
+              },
+              "hint": {
+                "en": "As shown in the SofaBaton app, e.g. F09E9E7FD974.",
+                "da": "Som vist i SofaBaton-appen, fx F09E9E7FD974."
+              },
+              "value": ""
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "label": {
+                "en": "Username (optional)",
+                "da": "Brugernavn (valgfrit)"
+              },
+              "value": ""
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "label": {
+                "en": "Password (optional)",
+                "da": "Adgangskode (valgfrit)"
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Maintenance",
+            "da": "Vedligeholdelse"
+          },
+          "children": [
+            {
+              "id": "paused",
+              "type": "checkbox",
+              "label": {
+                "en": "Pause (release hub for the SofaBaton app)",
+                "da": "Pause (slip hub'en til SofaBaton-appen)"
+              },
+              "hint": {
+                "en": "Enable to fully disconnect Homey from the hub so you can manage devices in the SofaBaton phone app without it slowing down. Disable again to reconnect.",
+                "da": "Slå til for at koble Homey helt fra hub'en, så du kan redigere enheder i SofaBaton-telefon-appen uden at den bliver træg. Slå fra igen for at genforbinde."
+              },
+              "value": false
+            }
+          ]
+        }
+      ],
+      "id": "hub"
+    }
+  ],
+  "capabilities": {
+    "last_button": {
+      "type": "string",
+      "title": {
+        "en": "Last button",
+        "da": "Sidste knap"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false
+    },
+    "refresh_devices": {
+      "type": "boolean",
+      "title": {
+        "en": "Refresh devicelist",
+        "da": "Refresh devicelist"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": true
+    }
+  }
+}

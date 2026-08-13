@@ -1,0 +1,11 @@
+{
+  "off": "Off",
+  "broker_offline": "MQTT broker offline",
+  "cannot_reach_broker": "Cannot reach broker",
+  "configure_prompt": "Open settings and enter the broker address and hub MAC",
+  "paused": "Paused — the hub is released for the SofaBaton app",
+  "pair": {
+    "error_host": "Please enter the broker address",
+    "error_mac": "Please enter the hub MAC address"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "1.0.0": {
+    "en": "Initial release — control your SofaBaton X2 devices from Homey over MQTT, and trigger Homey Flows from the remote's MQTT buttons.",
+    "da": "Første udgave — styr dine SofaBaton X2-apparater fra Homey via MQTT, og udløs Homey-Flows fra fjernbetjeningens MQTT-knapper."
+  }
+}

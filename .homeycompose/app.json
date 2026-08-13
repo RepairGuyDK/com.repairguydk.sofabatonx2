@@ -1,0 +1,38 @@
+{
+  "id": "com.repairguydk.sofabatonx2",
+  "version": "1.0.0",
+  "compatibility": ">=12.4.0",
+  "sdk": 3,
+  "runtime": "nodejs",
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "SofaBaton X2",
+    "da": "SofaBaton X2"
+  },
+  "description": {
+    "en": "Connect your SofaBaton X2 universal remote to Homey over MQTT — control your devices from Homey and use the remote's buttons to trigger Homey Flows.",
+    "da": "Forbind din SofaBaton X2-universalfjernbetjening til Homey via MQTT — styr dine apparater fra Homey, og brug fjernbetjeningens knapper til at udløse Homey-Flows."
+  },
+  "category": [
+    "video"
+  ],
+  "tags": {
+    "en": ["sofabaton", "remote", "universal remote", "mqtt", "infrared", "home theater"],
+    "da": ["sofabaton", "fjernbetjening", "universalfjernbetjening", "mqtt", "infrarød", "hjemmebiograf"]
+  },
+  "brandColor": "#182A38",
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Fille Kirstein",
+    "email": "repairguydk@gmail.com"
+  },
+  "support": "mailto:repairguydk@gmail.com",
+  "source": "https://github.com/RepairGuyDK/com.repairguydk.sofabatonx2"
+}

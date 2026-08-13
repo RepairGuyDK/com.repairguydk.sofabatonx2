@@ -1,0 +1,27 @@
+{
+  "title": { "en": "A specific button was pressed", "da": "En bestemt knap blev trykket" },
+  "titleFormatted": {
+    "en": "On [[sb_device]], [[key]] was pressed",
+    "da": "På [[sb_device]] blev [[key]] trykket"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "sb_device",
+      "title": { "en": "Device", "da": "Enhed" },
+      "placeholder": { "en": "Choose a device…", "da": "Vælg en enhed…" }
+    },
+    {
+      "type": "autocomplete",
+      "name": "key",
+      "title": { "en": "Key", "da": "Tast" },
+      "placeholder": { "en": "Choose a key…", "da": "Vælg en tast…" }
+    }
+  ],
+  "tokens": [
+    { "name": "device_name", "type": "string", "title": { "en": "Device", "da": "Enhed" }, "example": "TV Kælder" },
+    { "name": "key_name", "type": "string", "title": { "en": "Key", "da": "Tast" }, "example": "Play" },
+    { "name": "device_id", "type": "number", "title": { "en": "Device ID", "da": "Enheds-ID" } },
+    { "name": "key_id", "type": "number", "title": { "en": "Key ID", "da": "Tast-ID" } }
+  ]
+}

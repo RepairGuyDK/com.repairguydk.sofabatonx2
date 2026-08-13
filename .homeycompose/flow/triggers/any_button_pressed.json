@@ -1,0 +1,10 @@
+{
+  "title": { "en": "Any button was pressed", "da": "En vilkårlig knap blev trykket" },
+  "titleFormatted": { "en": "Any button was pressed", "da": "En vilkårlig knap blev trykket" },
+  "tokens": [
+    { "name": "device_name", "type": "string", "title": { "en": "Device", "da": "Enhed" }, "example": "TV Kælder" },
+    { "name": "key_name", "type": "string", "title": { "en": "Key", "da": "Tast" }, "example": "Play" },
+    { "name": "device_id", "type": "number", "title": { "en": "Device ID", "da": "Enheds-ID" } },
+    { "name": "key_id", "type": "number", "title": { "en": "Key ID", "da": "Tast-ID" } }
+  ]
+}

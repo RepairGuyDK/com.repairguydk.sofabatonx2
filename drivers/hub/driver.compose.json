@@ -1,0 +1,80 @@
+{
+  "name": { "en": "SofaBaton Hub", "da": "SofaBaton Hub" },
+  "class": "remote",
+  "capabilities": ["last_button", "refresh_devices"],
+  "platforms": ["local"],
+  "connectivity": ["lan"],
+  "images": {
+    "small": "/drivers/hub/assets/images/small.png",
+    "large": "/drivers/hub/assets/images/large.png"
+  },
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": { "next": "add_devices" }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "settings": [
+    {
+      "type": "group",
+      "label": { "en": "MQTT broker", "da": "MQTT-broker" },
+      "children": [
+        {
+          "id": "host",
+          "type": "text",
+          "label": { "en": "Broker address", "da": "Broker-adresse" },
+          "hint": { "en": "IP of the MQTT broker the hub is connected to.", "da": "IP på MQTT-brokeren som hub'en er koblet til." },
+          "value": ""
+        },
+        {
+          "id": "port",
+          "type": "number",
+          "label": { "en": "Port", "da": "Port" },
+          "min": 1,
+          "max": 65535,
+          "value": 1883
+        },
+        {
+          "id": "mac",
+          "type": "text",
+          "label": { "en": "Hub MAC address", "da": "Hub MAC-adresse" },
+          "hint": { "en": "As shown in the SofaBaton app, e.g. F09E9E7FD974.", "da": "Som vist i SofaBaton-appen, fx F09E9E7FD974." },
+          "value": ""
+        },
+        {
+          "id": "username",
+          "type": "text",
+          "label": { "en": "Username (optional)", "da": "Brugernavn (valgfrit)" },
+          "value": ""
+        },
+        {
+          "id": "password",
+          "type": "password",
+          "label": { "en": "Password (optional)", "da": "Adgangskode (valgfrit)" },
+          "value": ""
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "label": { "en": "Maintenance", "da": "Vedligeholdelse" },
+      "children": [
+        {
+          "id": "paused",
+          "type": "checkbox",
+          "label": { "en": "Pause (release hub for the SofaBaton app)", "da": "Pause (slip hub'en til SofaBaton-appen)" },
+          "hint": {
+            "en": "Enable to fully disconnect Homey from the hub so you can manage devices in the SofaBaton phone app without it slowing down. Disable again to reconnect.",
+            "da": "Slå til for at koble Homey helt fra hub'en, så du kan redigere enheder i SofaBaton-telefon-appen uden at den bliver træg. Slå fra igen for at genforbinde."
+          },
+          "value": false
+        }
+      ]
+    }
+  ]
+}
