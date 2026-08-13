@@ -27,8 +27,11 @@
         {
           "id": "host",
           "type": "text",
-          "label": { "en": "Broker address", "da": "Broker-adresse" },
-          "hint": { "en": "IP of the MQTT broker the hub is connected to.", "da": "IP på MQTT-brokeren som hub'en er koblet til." },
+          "label": { "en": "Broker address (default: Homey)", "da": "Broker-adresse (standard: Homey)" },
+          "hint": {
+            "en": "IP of the MQTT broker the hub is connected to. Defaults to your Homey's IP (handy if you run the MQTT Broker app on Homey) — change it if your broker runs elsewhere.",
+            "da": "IP på MQTT-brokeren som hub'en er koblet til. Sættes som standard til Homeys IP (nyttigt hvis du kører MQTT Broker-appen på Homey) — ret den hvis din broker kører et andet sted."
+          },
           "value": ""
         },
         {

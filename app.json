@@ -264,12 +264,12 @@
               "id": "host",
               "type": "text",
               "label": {
-                "en": "Broker address",
-                "da": "Broker-adresse"
+                "en": "Broker address (default: Homey)",
+                "da": "Broker-adresse (standard: Homey)"
               },
               "hint": {
-                "en": "IP of the MQTT broker the hub is connected to.",
-                "da": "IP på MQTT-brokeren som hub'en er koblet til."
+                "en": "IP of the MQTT broker the hub is connected to. Defaults to your Homey's IP (handy if you run the MQTT Broker app on Homey) — change it if your broker runs elsewhere.",
+                "da": "IP på MQTT-brokeren som hub'en er koblet til. Sættes som standard til Homeys IP (nyttigt hvis du kører MQTT Broker-appen på Homey) — ret den hvis din broker kører et andet sted."
               },
               "value": ""
             },
@@ -365,6 +365,16 @@
       "setable": true,
       "uiComponent": "button",
       "uiQuickAction": true
+    }
+  },
+  "discovery": {
+    "sofabaton": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "sofabaton_hub",
+        "protocol": "udp"
+      },
+      "id": "{{name}}"
     }
   }
 }

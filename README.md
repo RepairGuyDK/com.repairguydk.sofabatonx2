@@ -31,7 +31,12 @@ Homey Flows.
 2. In Homey, add the **SofaBaton Hub** device.
 3. Open the device's **Settings** and enter the broker address, port, the hub
    **MAC address**, and username/password if your broker uses them.
-4. Build your Flows using the SofaBaton trigger and action cards.
+4. **First-time tip:** the hub's device-list query can be asleep. If your
+   devices/keys show as "Device N" / "Key N" instead of their real names,
+   power-cycle the hub (unplug ~10 s), wait a minute, then tap **Refresh
+   devicelist** on the device card. The full catalog then loads and is cached.
+5. Build your Flows using the SofaBaton trigger and action cards. New MQTT
+   buttons also appear automatically the first time you press them.
 
 ## Notes
 

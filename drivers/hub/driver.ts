@@ -167,15 +167,58 @@ module.exports = class HubDriver extends Homey.Driver {
 
   // --- Pairing ---
 
-  // Broker/MAC details are entered in the device's settings page (pre-filled
-  // with sensible defaults), so pairing just creates the single hub device.
-  async onPair(session: Homey.Driver.PairSession): Promise<void> {
-    session.setHandler('list_devices', async () => [
-      {
-        name: 'SofaBaton X2',
-        data: { id: 'sofabaton-hub' },
-      },
-    ]);
+  // Auto-discover the hub over mDNS (it advertises its MAC + name), so the MAC
+  // is filled in for the user. A manual option is always offered as a fallback
+  // for networks where mDNS isn't available. The broker address is entered in
+  // the device's settings afterwards.
+  async onPairListDevices(): Promise<Array<{ name: string; data: { id: string }; settings?: Record<string, unknown> }>> {
+    const devices: Array<{ name: string; data: { id: string }; settings?: Record<string, unknown> }> = [];
+
+    // Default the broker address to Homey's own IP — many users run the
+    // "MQTT Broker" community app on Homey itself. Easy to change afterwards.
+    let homeyIp = '';
+    try {
+      const address = await this.homey.cloud.getLocalAddress();
+      const match = String(address).match(/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/);
+      if (match) {
+        [, homeyIp] = match;
+      }
+    } catch (err) {
+      this.error(`Could not read Homey IP: ${err instanceof Error ? err.message : err}`);
+    }
+    const baseSettings = {
+      host: homeyIp, port: 1883, username: '', password: '',
+    };
+
+    try {
+      const strategy = this.homey.discovery.getStrategy('sofabaton');
+      const results = strategy.getDiscoveryResults();
+      for (const result of Object.values(results)) {
+        const txt = (result as { txt?: Record<string, string> }).txt || {};
+        // Homey lower-cases the mDNS TXT keys (mac, name).
+        const mac = String(txt.mac || txt.MAC || '').toUpperCase().replace(/[^0-9A-F]/g, '');
+        if (mac.length !== 12) {
+          continue;
+        }
+        const name = txt.name || txt.NAME || 'SofaBaton X2';
+        devices.push({
+          name: `${name} — ${mac}`,
+          data: { id: mac },
+          settings: { ...baseSettings, mac },
+        });
+      }
+    } catch (err) {
+      this.error(`Discovery failed: ${err instanceof Error ? err.message : err}`);
+    }
+
+    // Always offer a manual option too.
+    devices.push({
+      name: 'SofaBaton X2 (manual setup)',
+      data: { id: 'sofabaton-hub-manual' },
+      settings: { ...baseSettings, mac: '' },
+    });
+
+    return devices;
   }
 
 };
