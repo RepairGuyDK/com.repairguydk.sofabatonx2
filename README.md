@@ -33,7 +33,7 @@ devices from Homey Flows, and use the remote's buttons to trigger Homey Flows.
 5. **Tap "Refresh devicelist"** on the device card to load your devices and keys.
 
 **Full step-by-step guide (with pictures):**
-https://claude.ai/code/artifact/80cc260c-867d-4359-8f89-5baff17eace3
+https://repairguydk.github.io/com.repairguydk.sofabatonx2/
 
 ## Tips
 
