@@ -29,7 +29,9 @@ devices from Homey Flows, and use the remote's buttons to trigger Homey Flows.
 2. Point the SofaBaton app at it - hub settings -> MQTT / Home Assistant -> your
    broker's address and port.
 3. Add the device in Homey - Devices -> + -> SofaBaton X2 -> SofaBaton Hub. Pick
-   the auto-discovered "X2 HUB - ..." (the MAC fills in for you).
+   the auto-discovered "X2 HUB - ..." (the MAC fills in for you). Both the found
+   hub and "SofaBaton X2 (manual setup)" start out ticked - un-tick the manual
+   one so you don't also add an empty second device.
 4. Open the device Settings - the broker address defaults to your Homey's IP.
    Set the port to match your broker and save. The device connects.
 5. Tap "Refresh devicelist" on the device card to load your devices and keys.
