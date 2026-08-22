@@ -5,5 +5,8 @@
   },
   "1.0.1": {
     "en": "Initial release — control your SofaBaton devices from Homey over MQTT and trigger Homey Flows from the remote's MQTT buttons. Includes automatic hub discovery (mDNS) and Homey-IP broker defaults for easy setup."
+  },
+  "1.0.2": {
+    "en": "guidelines for install"
   }
 }
