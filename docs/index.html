@@ -192,6 +192,15 @@
   .way .wl .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; }
   .way p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
 
+  /* screen illustration */
+  .shot { margin: 18px 0 2px; }
+  .shot svg { width: 100%; max-width: 320px; height: auto; display: block; margin: 0 auto; }
+  .shot figcaption {
+    margin: 12px auto 0; max-width: 46ch; text-align: center;
+    font-size: .9rem; color: var(--ink-soft); line-height: 1.5;
+  }
+  .shot figcaption b { color: var(--warn-ink); }
+
   /* trouble */
   .trouble { margin-top: 40px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 26px; box-shadow: var(--shadow); }
   .trouble h2 {
@@ -315,7 +324,64 @@
         <li>Homey looks for your hub. When <b>“X2 HUB — …”</b> pops up, pick it — the hub’s ID fills in by itself. ✨
           <ul><li>Don’t see it? Choose <b>“SofaBaton X2 (manual setup)”</b> instead.</li></ul>
         </li>
-        <li><b>Un-tick the extra option.</b> The list starts with <b>both</b> the found hub <b>and</b> “SofaBaton X2 (manual setup)” ticked. If your hub was found automatically, <b>un-tick “manual setup”</b> so only the real hub stays ticked — otherwise you add an empty second device.</li>
+        <li><b>Un-tick the extra option.</b> The list starts with <b>both</b> the found hub <b>and</b> “SofaBaton X2 (manual setup)” ticked. If your hub was found automatically, <b>un-tick “manual setup”</b> so only the real hub stays ticked — otherwise you add an empty second device.
+          <figure class="shot">
+            <svg viewBox="0 0 360 414" role="img" aria-label="Homey 'New devices found' screen showing two ticked device cards; un-tick the SofaBaton X2 (manual setup) card on the right." xmlns="http://www.w3.org/2000/svg" font-family="'IBM Plex Sans', system-ui, sans-serif">
+              <defs>
+                <linearGradient id="btn" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#4a90ff"/><stop offset="1" stop-color="#2f6bff"/>
+                </linearGradient>
+              </defs>
+              <rect x="4" y="4" width="352" height="406" rx="26" fill="#0b1016" stroke="#1f2b36" stroke-width="1.5"/>
+              <!-- top bar -->
+              <path d="M24 25 L19 30 L24 35" fill="none" stroke="#7d94a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="33" y="34" fill="#7d94a3" font-size="12">SofaBaton X2</text>
+              <text x="338" y="34" fill="#7d94a3" font-size="13" text-anchor="end">✕</text>
+              <!-- header -->
+              <text x="180" y="72" fill="#eef3f6" font-size="18" font-weight="700" text-anchor="middle">New devices found</text>
+              <text x="180" y="93" fill="#7d94a3" font-size="11.5" text-anchor="middle">Select the devices you want to add</text>
+              <!-- deselect pill -->
+              <rect x="115" y="112" width="130" height="30" rx="15" fill="#2f80ff" fill-opacity="0.12"/>
+              <text x="180" y="131" fill="#57a6ff" font-size="12.5" font-weight="600" text-anchor="middle">Deselect all (2)</text>
+              <!-- card 1 (keep) -->
+              <rect x="22" y="162" width="150" height="132" rx="16" fill="#131c25" stroke="#2f6bff" stroke-width="2"/>
+              <g stroke="#cfe0ea">
+                <g transform="translate(85,184)">
+                  <rect x="0" y="0" width="24" height="52" rx="7" fill="none" stroke-width="1.8" opacity="0.9"/>
+                  <rect x="5" y="6" width="14" height="8" rx="2" fill="#cfe0ea" stroke="none" opacity="0.35"/>
+                  <circle cx="12" cy="25" r="2.4" fill="#cfe0ea" stroke="none" opacity="0.85"/>
+                  <g fill="#cfe0ea" stroke="none" opacity="0.7"><circle cx="7" cy="34" r="1.7"/><circle cx="12" cy="34" r="1.7"/><circle cx="17" cy="34" r="1.7"/><circle cx="7" cy="41" r="1.7"/><circle cx="12" cy="41" r="1.7"/><circle cx="17" cy="41" r="1.7"/></g>
+                </g>
+              </g>
+              <rect x="138" y="176" width="22" height="22" rx="6" fill="#2f80ff"/>
+              <path d="M143 187 L147 191 L154 182" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="36" y="262" fill="#eef3f6" font-size="12.5" font-weight="600">X2 HUB —</text>
+              <text x="36" y="280" fill="#7d94a3" font-size="10.5" font-family="'IBM Plex Mono', monospace">F09E9E7FD9…</text>
+              <!-- card 2 (un-tick) -->
+              <rect x="188" y="162" width="150" height="132" rx="16" fill="#131c25" stroke="#2f6bff" stroke-width="2"/>
+              <g stroke="#cfe0ea">
+                <g transform="translate(251,184)">
+                  <rect x="0" y="0" width="24" height="52" rx="7" fill="none" stroke-width="1.8" opacity="0.9"/>
+                  <rect x="5" y="6" width="14" height="8" rx="2" fill="#cfe0ea" stroke="none" opacity="0.35"/>
+                  <circle cx="12" cy="25" r="2.4" fill="#cfe0ea" stroke="none" opacity="0.85"/>
+                  <g fill="#cfe0ea" stroke="none" opacity="0.7"><circle cx="7" cy="34" r="1.7"/><circle cx="12" cy="34" r="1.7"/><circle cx="17" cy="34" r="1.7"/><circle cx="7" cy="41" r="1.7"/><circle cx="12" cy="41" r="1.7"/><circle cx="17" cy="41" r="1.7"/></g>
+                </g>
+              </g>
+              <rect x="304" y="176" width="22" height="22" rx="6" fill="#2f80ff"/>
+              <path d="M309 187 L313 191 L320 182" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="202" y="262" fill="#eef3f6" font-size="12.5" font-weight="600">SofaBaton X2</text>
+              <text x="202" y="280" fill="#7d94a3" font-size="10.5">(manual…</text>
+              <!-- coral emphasis on card 2 checkbox -->
+              <rect x="300" y="172" width="30" height="30" rx="9" fill="none" stroke="#ef6a4f" stroke-width="2.4"/>
+              <rect x="188" y="303" width="150" height="26" rx="13" fill="#ef6a4f" fill-opacity="0.16" stroke="#ef6a4f" stroke-width="1.2"/>
+              <text x="263" y="320" fill="#ff8a72" font-size="11" font-weight="700" text-anchor="middle">Un-tick this one</text>
+              <!-- continue -->
+              <rect x="22" y="352" width="316" height="44" rx="14" fill="url(#btn)"/>
+              <text x="180" y="379" fill="#06121f" font-size="15" font-weight="700" text-anchor="middle">Continue</text>
+            </svg>
+            <figcaption>The <b>New devices found</b> screen — both cards start ticked. Tap the ✓ on <b>SofaBaton X2 (manual…)</b> to un-tick it, leaving only the real hub.</figcaption>
+          </figure>
+        </li>
         <li>Open the new device’s <b>Settings</b> (the ⚙️ gear) and check:
           <ul>
             <li><b>Broker address</b> — already set to your Homey’s IP 👍</li>
