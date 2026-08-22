@@ -17,12 +17,14 @@ devices from Homey Flows, and use the remote's buttons to trigger Homey Flows.
 
 - A Homey Pro (runs local apps).
 - A SofaBaton X2 hub with MQTT / Home Assistant enabled in the SofaBaton app.
-- An MQTT broker both your hub and Homey can reach - e.g. the free "MQTT Broker"
-  community app on Homey, or Mosquitto on a NAS / Raspberry Pi.
+- An MQTT broker both your hub and Homey can reach - easiest is the free
+  "MQTT Broker" community app by Menno van Grinsven
+  (https://homey.app/a/nl.scanno.mqttbroker/), or Mosquitto on a NAS / Raspberry Pi.
 
 ## Setup
 
-1. Run an MQTT broker. Easiest: install the "MQTT Broker" app on Homey
+1. Run an MQTT broker. Easiest: install the "MQTT Broker" app by Menno van
+   Grinsven (https://homey.app/a/nl.scanno.mqttbroker/) on Homey
    (it listens on port 1883).
 2. Point the SofaBaton app at it - hub settings -> MQTT / Home Assistant -> your
    broker's address and port.

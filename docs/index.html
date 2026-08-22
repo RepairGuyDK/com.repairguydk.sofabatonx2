@@ -262,12 +262,20 @@
 
     <section class="step">
       <div class="step-head"><div class="num"></div><h3>Set up the “post office”</h3></div>
-      <p>Homey and your SofaBaton send messages to each other through a little middleman called an <b>MQTT broker</b>. Think of it as a post office they both drop letters at. The easiest way is to run one right on your Homey.</p>
+      <p>Homey and your SofaBaton send messages to each other through a little middleman called an <b>MQTT broker</b>. Think of it as a post office they both drop letters at. The easiest way is to run one right on your Homey — use this exact app:</p>
+      <a class="linkbtn" href="https://homey.app/a/nl.scanno.mqttbroker/" target="_blank" rel="noopener">
+        <span class="lb-text">
+          <span class="lb-label">Install this broker</span>
+          <span class="lb-url">MQTT Broker — by Menno van Grinsven</span>
+        </span>
+        <span class="lb-arrow">↗</span>
+      </a>
       <ol class="do">
-        <li>In the Homey app, open <span class="path">Apps</span>, search for <b>“MQTT Broker”</b>, and tap <b>Install</b>.</li>
+        <li>Open the link above and tap <b>Install App</b> (or in the Homey app: <span class="path">Apps</span> → search <b>“MQTT Broker”</b> → the one by <b>Menno van Grinsven</b>).</li>
         <li>Open the MQTT Broker app and make sure it says <b>running</b>.</li>
         <li>Note the <b>port</b> — it’s usually <span class="chip">1883</span>.</li>
       </ol>
+      <div class="note warn"><span class="ic">⚠️</span><div><b>Also running MQTT on Home Assistant?</b> Then set this Homey broker to a port <b>other than</b> <span class="chip">1883</span> (e.g. <span class="chip">1884</span>) so the two don’t clash — and use that same port everywhere below.</div></div>
       <div class="note tip"><span class="ic">💡</span><div><b>Already have a broker?</b> If you run Mosquitto on a Raspberry Pi or NAS, you can use that instead — just remember its address and port.</div></div>
     </section>
 
