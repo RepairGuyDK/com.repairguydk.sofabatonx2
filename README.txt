@@ -1,50 +1,50 @@
-SofaBaton X2 for Homey
-======================
+# SofaBaton X2 for Homey
 
-Control your SofaBaton X2 hub from Homey over MQTT: switch activities, press
-remote keys, run macros and favorites, and use everything in Homey Flows.
+Bring your SofaBaton X2 universal remote into Homey over MQTT. Control your
+devices from Homey Flows, and use the remote's buttons to trigger Homey Flows.
 
-How it works
-------------
-The X2 hub talks to an MQTT broker (the same integration SofaBaton built for
-Home Assistant). This app is an MQTT client on that same broker. Both the hub
-and Homey must be able to reach the broker on your LAN.
+## What it does
 
-    SofaBaton X2 hub  <-- MQTT -->  broker  <-- MQTT -->  Homey (this app)
+- Homey -> SofaBaton: a Flow action, "On [device]: press [key]", sends commands
+  to any device in your SofaBaton (TV, aircon, fan, projector, ...).
+- SofaBaton -> Homey: Flow triggers fire when you press an MQTT-mapped button on
+  the remote, so a button press can run anything in Homey.
+- Devices and keys appear as friendly dropdowns - no raw JSON. New MQTT buttons
+  appear the first time you press them.
+- The hub is auto-discovered over mDNS and the settings are pre-filled for you.
 
-Setup
------
-1. Run an MQTT broker on your network. Easiest: install the free "MQTT Broker"
-   community app on Homey (app id nl.scanno.mqttbroker). It listens on port 1883.
-   Any other broker (Mosquitto on a NAS/Pi, etc.) works too.
+## Requirements
 
-2. In the SofaBaton phone app, open your hub's settings and enable the MQTT /
-   Home Assistant option. Enter the broker's IP address, port (1883) and, if the
-   broker requires it, username and password. Note the hub's MAC address shown
-   in the app.
+- A Homey Pro (runs local apps).
+- A SofaBaton X2 hub with MQTT / Home Assistant enabled in the SofaBaton app.
+- An MQTT broker both your hub and Homey can reach - e.g. the free "MQTT Broker"
+  community app on Homey, or Mosquitto on a NAS / Raspberry Pi.
 
-3. In Homey, add the "SofaBaton Hub" device. In the pairing screen enter the
-   broker address, port, the hub MAC address, and broker username/password if
-   used. The app tests the connection and lists the activities it finds.
+## Setup
 
-Flow cards
-----------
-Triggers:  The activity changed | A specific activity started | Everything turned off
-Condition: Current activity is / is not <activity>
-Actions:   Start activity | Turn everything off | Press a remote key |
-           Run a macro | Send a favorite
+1. Run an MQTT broker. Easiest: install the "MQTT Broker" app on Homey
+   (it listens on port 1883).
+2. Point the SofaBaton app at it - hub settings -> MQTT / Home Assistant -> your
+   broker's address and port.
+3. Add the device in Homey - Devices -> + -> SofaBaton X2 -> SofaBaton Hub. Pick
+   the auto-discovered "X2 HUB - ..." (the MAC fills in for you).
+4. Open the device Settings - the broker address defaults to your Homey's IP.
+   Set the port to match your broker and save. The device connects.
+5. Tap "Refresh devicelist" on the device card to load your devices and keys.
 
-Notes
------
-- Standard remote keys (play, volume, arrows, ...) are sent in the context of
-  the currently running activity, so start an activity first.
-- Macros and favorites are defined per activity in the SofaBaton app.
+Full step-by-step guide (with pictures):
+https://claude.ai/code/artifact/80cc260c-867d-4359-8f89-5baff17eace3
 
-Development
------------
-    npm install
-    homey app validate --level publish
-    homey app run          # live-run on your Homey for testing
+## Tips
 
-The legacy reverse-engineered TCP transport (superseded by MQTT) is kept in
-_legacy/ for reference and is excluded from the build.
+- Names showing as "Device N / Key N"? The hub's list query can be asleep -
+  power-cycle the hub (unplug ~10 s), wait a minute, then tap "Refresh
+  devicelist" again.
+- Editing devices in the SofaBaton phone app while Homey is connected can be
+  slow (the hub allows one client at a time). Turn on "Pause" in the device
+  settings to release the hub, then turn it off again.
+- Only buttons mapped to the SofaBaton "MQTT" device reach Homey.
+
+## Support
+
+Questions or bugs? repairguydk@gmail.com

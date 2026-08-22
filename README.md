@@ -1,51 +1,53 @@
 # SofaBaton X2 for Homey
 
-Connect your **SofaBaton X2** universal remote to Homey over MQTT. Control your
-SofaBaton devices from Homey Flows, and use the remote's MQTT buttons to trigger
-Homey Flows.
+Bring your **SofaBaton X2** universal remote into Homey over MQTT. Control your
+devices from Homey Flows, and use the remote's buttons to trigger Homey Flows.
 
 ## What it does
 
-- **Homey → SofaBaton** — a Flow action *"On [device]: press [key]"* sends
-  commands to any device configured in your SofaBaton (TV, aircon, fan, …).
-- **SofaBaton → Homey** — Flow triggers *"A specific button was pressed"* and
-  *"Any button was pressed"* fire when you press an MQTT-mapped button on the
-  remote, so a button press can run anything in Homey.
-- Devices and keys are read from the hub and shown as friendly dropdowns — no
-  raw JSON to hand-match. New MQTT buttons appear automatically the first time
-  you press them.
+- **Homey → SofaBaton** — a Flow action, *"On [device]: press [key]"*, sends
+  commands to any device in your SofaBaton (TV, aircon, fan, projector, …).
+- **SofaBaton → Homey** — Flow triggers fire when you press an MQTT-mapped button
+  on the remote, so a button press can run anything in Homey.
+- Devices and keys appear as friendly dropdowns — no raw JSON. New MQTT buttons
+  appear the first time you press them.
+- The hub is **auto-discovered over mDNS** and the settings are pre-filled for you.
 
 ## Requirements
 
-- A **Homey Pro** (runs local community apps).
-- A **SofaBaton X2** hub with the MQTT / Home Assistant integration enabled in
-  the SofaBaton app.
-- An **MQTT broker** that both your SofaBaton hub and Homey can reach on the LAN
-  (e.g. the free "MQTT Broker" community app on Homey, or Mosquitto on a
-  NAS/Raspberry Pi).
+- A **Homey Pro** (runs local apps).
+- A **SofaBaton X2 hub** with MQTT / Home Assistant enabled in the SofaBaton app.
+- An **MQTT broker** both your hub and Homey can reach — e.g. the free
+  "MQTT Broker" community app on Homey, or Mosquitto on a NAS / Raspberry Pi.
 
 ## Setup
 
-1. Run an MQTT broker on your network and point the SofaBaton app's MQTT
-   settings at it (note the broker address, port and the hub's MAC address).
-2. In Homey, add the **SofaBaton Hub** device.
-3. Open the device's **Settings** and enter the broker address, port, the hub
-   **MAC address**, and username/password if your broker uses them.
-4. **First-time tip:** the hub's device-list query can be asleep. If your
-   devices/keys show as "Device N" / "Key N" instead of their real names,
-   power-cycle the hub (unplug ~10 s), wait a minute, then tap **Refresh
-   devicelist** on the device card. The full catalog then loads and is cached.
-5. Build your Flows using the SofaBaton trigger and action cards. New MQTT
-   buttons also appear automatically the first time you press them.
+1. **Run an MQTT broker.** Easiest: install the "MQTT Broker" app on Homey
+   (it listens on port 1883).
+2. **Point the SofaBaton app at it** — hub settings → MQTT / Home Assistant →
+   your broker's address and port.
+3. **Add the device in Homey** — Devices → + → SofaBaton X2 → SofaBaton Hub.
+   Pick the auto-discovered *"X2 HUB — …"* (the MAC fills in for you).
+4. **Open the device Settings** — the broker address defaults to your Homey's IP.
+   Set the port to match your broker and save. The device connects.
+5. **Tap "Refresh devicelist"** on the device card to load your devices and keys.
 
-## Notes
+**Full step-by-step guide (with pictures):**
+https://claude.ai/code/artifact/80cc260c-867d-4359-8f89-5baff17eace3
 
-- The hub's device/key list query can be slow to respond. The app caches the
-  list, so day-to-day use never depends on it. Use the **Refresh devicelist**
-  button on the device card after adding/removing devices in the SofaBaton app.
-- Some hubs allow only one active client. If the SofaBaton phone app becomes
-  slow while Homey is connected, enable **Pause** in the device settings to
-  release the hub, then disable it again when you're done.
+## Tips
+
+- Names showing as "Device N / Key N"? The hub's list query can be asleep —
+  power-cycle the hub (unplug ~10 s), wait a minute, then tap **Refresh
+  devicelist** again.
+- Editing devices in the SofaBaton phone app while Homey is connected can be slow
+  (the hub allows one client at a time). Turn on **Pause** in the device settings
+  to release the hub, then turn it off again.
+- Only buttons mapped to the SofaBaton **"MQTT" device** reach Homey.
+
+## Support
+
+Questions or bugs? repairguydk@gmail.com
 
 ## License
 
