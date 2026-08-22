@@ -25,7 +25,10 @@ devices from Homey Flows, and use the remote's buttons to trigger Homey Flows.
 
 1. Run an MQTT broker. Easiest: install the "MQTT Broker" app by Menno van
    Grinsven (https://homey.app/a/nl.scanno.mqttbroker/) on Homey
-   (it listens on port 1883).
+   (it listens on port 1883). In its settings, tick "Also allow unsecure
+   connections" and "Disable user authentication" (or set a username & password
+   and use the same ones on the device), then press "Start Broker" and confirm
+   it shows "Broker is Running".
 2. Point the SofaBaton app at it - hub settings -> MQTT / Home Assistant -> your
    broker's address and port.
 3. Add the device in Homey - Devices -> + -> SofaBaton X2 -> SofaBaton Hub. Pick
