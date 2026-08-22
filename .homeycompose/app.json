@@ -1,6 +1,6 @@
 {
   "id": "com.repairguydk.sofabatonx2",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": ">=12.4.0",
   "sdk": 3,
   "runtime": "nodejs",
@@ -19,8 +19,22 @@
     "video"
   ],
   "tags": {
-    "en": ["sofabaton", "remote", "universal remote", "mqtt", "infrared", "home theater"],
-    "da": ["sofabaton", "fjernbetjening", "universalfjernbetjening", "mqtt", "infrarød", "hjemmebiograf"]
+    "en": [
+      "sofabaton",
+      "remote",
+      "universal remote",
+      "mqtt",
+      "infrared",
+      "home theater"
+    ],
+    "da": [
+      "sofabaton",
+      "fjernbetjening",
+      "universalfjernbetjening",
+      "mqtt",
+      "infrarød",
+      "hjemmebiograf"
+    ]
   },
   "brandColor": "#182A38",
   "permissions": [],
