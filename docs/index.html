@@ -284,14 +284,14 @@
         <li>Open the MQTT Broker app’s <b>settings</b> and set it up so your hub can connect:
           <ul>
             <li>Tick <b>“Also allow unsecure connections”</b>.</li>
-            <li>Tick <b>“Disable user authentication”</b> — this is the easy path (no login needed).</li>
+            <li><b>Create a Username &amp; Password.</b> Write them down — you’ll enter the <b>same</b> ones on the device in <b>step 4</b>.</li>
             <li>Leave <b>“Disable password hashing”</b> and <b>“Enable secure connections”</b> unticked.</li>
           </ul>
         </li>
         <li><b>Press “Start Broker”</b>, then check it now says <b>“Broker is Running”</b>. 🟢 Easy to forget — and nothing connects until it’s running!</li>
         <li>Note the <b>port</b> — it’s usually <span class="chip">1883</span>.</li>
       </ol>
-      <div class="note warn"><span class="ic">🔑</span><div><b>Want to keep a login instead?</b> Leave “Disable user authentication” <b>off</b> and set a <b>Username &amp; Password</b> in the broker. You’ll then type the <b>same</b> username and password into the SofaBaton device in <b>step 4</b>.</div></div>
+      <div class="note warn"><span class="ic">🔑</span><div><b>Odd but important:</b> set a username &amp; password <b>even if</b> “Disable user authentication” is ticked. In testing, the hub simply refused to connect until a real user existed — so don’t skip this.</div></div>
       <div class="note warn"><span class="ic">⚠️</span><div><b>Also running MQTT on Home Assistant?</b> Then set this Homey broker to a port <b>other than</b> <span class="chip">1883</span> (e.g. <span class="chip">1884</span>) so the two don’t clash — and use that same port everywhere below.</div></div>
       <div class="note tip"><span class="ic">💡</span><div><b>Already have a broker?</b> If you run Mosquitto on a Raspberry Pi or NAS, you can use that instead — just remember its address and port.</div></div>
     </section>
@@ -394,7 +394,7 @@
           <ul>
             <li><b>Broker address</b> — already set to your Homey’s IP 👍</li>
             <li><b>Port</b> — set it to match your broker (<span class="chip">1883</span>)</li>
-            <li><b>Username / Password</b> — only if your broker asks for them, otherwise leave blank</li>
+            <li><b>Username / Password</b> — enter the <b>same</b> ones you created in the MQTT Broker (step 1)</li>
           </ul>
         </li>
         <li>Tap <b>Save</b>. The device turns on and connects. 🎉</li>
@@ -429,7 +429,7 @@
     <dl>
       <div>
         <dt><span class="q">→</span> The device stays grey / “cannot reach broker”</dt>
-        <dd>Make sure the MQTT Broker app shows <b>“Broker is Running”</b> (press <b>Start Broker</b> if not). Double-check the broker address and port, that the SofaBaton app points at the <b>same</b> broker, and that the login settings match on both sides (either <b>Disable user authentication</b> on, or the <b>same</b> username &amp; password everywhere).</dd>
+        <dd>Make sure the MQTT Broker app shows <b>“Broker is Running”</b> (press <b>Start Broker</b> if not). Double-check the broker address and port, and that the SofaBaton app points at the <b>same</b> broker. If it still won’t connect, <b>create a username &amp; password</b> in the broker and enter the <b>same</b> ones on the device — the hub often refuses to connect without a real login, even with “Disable user authentication” on.</dd>
       </div>
       <div>
         <dt><span class="q">→</span> My button presses don’t reach Homey</dt>
