@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SofaBaton X2 · Homey Setup Guide</title>
+<meta name="description" content="Step-by-step guide to connect a SofaBaton X2 universal remote to Homey over MQTT.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕹️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --paper: #eaf0f3;
+    --surface: #ffffff;
+    --surface-2: #f3f7f9;
+    --ink: #122029;
+    --ink-soft: #48606d;
+    --line: #d5dfe5;
+    --accent: #0e97ad;
+    --accent-ink: #0a6c7c;
+    --accent-soft: #ddeff2;
+    --warn: #c85440;
+    --warn-ink: #a5402e;
+    --warn-soft: #f8e6e1;
+    --good: #1f9d6b;
+    --mono-bg: #e5edf1;
+    --mono-ink: #0a5867;
+    --shadow: 0 1px 2px rgba(18,32,41,.05), 0 8px 24px -12px rgba(18,32,41,.18);
+    --ring: rgba(14,151,173,.35);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #0c161e;
+      --surface: #14232e;
+      --surface-2: #1a2c38;
+      --ink: #e8eef2;
+      --ink-soft: #9db0bc;
+      --line: #263a47;
+      --accent: #2fc3d8;
+      --accent-ink: #7ad9e8;
+      --accent-soft: #10303a;
+      --warn: #ef8570;
+      --warn-ink: #f2a290;
+      --warn-soft: #33201b;
+      --good: #43c58c;
+      --mono-bg: #0b202a;
+      --mono-ink: #7ad9e8;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 30px -14px rgba(0,0,0,.6);
+      --ring: rgba(47,195,216,.4);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: clamp(20px, 5vw, 56px) 20px 72px; }
+
+  code, .chip, .kbd {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-variant-ligatures: none;
+  }
+  .chip {
+    background: var(--mono-bg); color: var(--mono-ink);
+    padding: .12em .5em; border-radius: 6px; font-size: .86em; font-weight: 600;
+    white-space: nowrap;
+  }
+  .path { font-weight: 600; color: var(--accent-ink); }
+  b, strong { font-weight: 700; color: var(--ink); }
+
+  /* ---- header ---- */
+  header { text-align: left; margin-bottom: 34px; }
+  .brandmark {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: "IBM Plex Mono", monospace; font-size: .78rem; font-weight: 600;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--accent-ink);
+  }
+  .brandmark svg { display: block; }
+  h1 {
+    font-family: "Bricolage Grotesque", "IBM Plex Sans", sans-serif;
+    font-weight: 800; font-size: clamp(2.1rem, 7vw, 3.1rem); line-height: 1.02;
+    letter-spacing: -.02em; text-wrap: balance; margin: 16px 0 10px;
+  }
+  h1 .accent { color: var(--accent); }
+  .lede { font-size: 1.12rem; color: var(--ink-soft); max-width: 34ch; margin: 0; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .meta span {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+    padding: 6px 13px; font-size: .82rem; font-weight: 600; color: var(--ink-soft);
+    box-shadow: var(--shadow);
+  }
+
+  /* ---- what you need ---- */
+  .need {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    padding: 22px 24px; box-shadow: var(--shadow); margin-bottom: 40px;
+  }
+  .need h2 {
+    font-family: "Bricolage Grotesque", sans-serif; font-size: 1.05rem; font-weight: 700;
+    margin: 0 0 14px; letter-spacing: -.01em;
+  }
+  .need ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 11px; }
+  .need li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; }
+  .need li .tick {
+    width: 22px; height: 22px; border-radius: 7px; background: var(--accent-soft);
+    color: var(--accent-ink); display: grid; place-items: center; margin-top: 1px;
+    flex: none;
+  }
+  .need li .tick svg { width: 13px; height: 13px; }
+
+  /* ---- steps ---- */
+  .steps { display: grid; gap: 20px; counter-reset: step; }
+  .step {
+    position: relative; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 18px; padding: 26px 26px 24px; box-shadow: var(--shadow);
+  }
+  .step-head { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; margin-bottom: 4px; }
+  .num {
+    counter-increment: step; flex: none;
+    width: 46px; height: 46px; border-radius: 13px;
+    background: linear-gradient(150deg, var(--accent), var(--accent-ink));
+    color: #fff; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800;
+    font-size: 1.4rem; display: grid; place-items: center;
+    box-shadow: 0 6px 16px -6px var(--ring);
+  }
+  .num::before { content: counter(step); }
+  .step h3 {
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 700;
+    font-size: 1.32rem; letter-spacing: -.015em; line-height: 1.12; margin: 0;
+    text-wrap: balance;
+  }
+  .step > p:first-of-type { margin-top: 14px; }
+  .step p { margin: 12px 0; }
+  .step p:last-child { margin-bottom: 0; }
+
+  ol.do { margin: 14px 0 0; padding: 0; list-style: none; counter-reset: sub; display: grid; gap: 13px; }
+  ol.do > li {
+    position: relative; padding-left: 40px; min-height: 27px;
+  }
+  ol.do > li::before {
+    counter-increment: sub; content: counter(sub);
+    position: absolute; left: 0; top: 0;
+    width: 27px; height: 27px; border-radius: 50%;
+    background: var(--surface-2); border: 1px solid var(--line);
+    color: var(--accent-ink); font-family: "IBM Plex Mono", monospace; font-weight: 600;
+    font-size: .82rem; display: grid; place-items: center;
+  }
+  ol.do ul { margin: 9px 0 0; padding-left: 20px; list-style: disc; }
+  ol.do ul li { margin: 5px 0; color: var(--ink-soft); }
+
+  /* callouts */
+  .note {
+    display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start;
+    border-radius: 12px; padding: 13px 15px; margin: 16px 0 0; font-size: .95rem; line-height: 1.5;
+  }
+  .note .ic { font-size: 1.05rem; line-height: 1.3; }
+  .note.tip { background: var(--accent-soft); color: var(--accent-ink); }
+  .note.tip b { color: var(--accent-ink); }
+  .note.warn { background: var(--warn-soft); color: var(--warn-ink); }
+  .note.warn b { color: var(--warn-ink); }
+
+  /* the install link button */
+  .linkbtn {
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    margin: 16px 0 4px; padding: 15px 18px; border-radius: 14px;
+    background: linear-gradient(150deg, var(--accent), var(--accent-ink));
+    color: #fff; text-decoration: none; box-shadow: 0 10px 24px -12px var(--ring);
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .linkbtn:hover { transform: translateY(-1px); box-shadow: 0 14px 28px -12px var(--ring); }
+  .linkbtn:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+  .linkbtn .lb-text { min-width: 0; }
+  .linkbtn .lb-label { font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; opacity: .85; font-weight: 600; }
+  .linkbtn .lb-url {
+    font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: .92rem;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block;
+  }
+  .linkbtn .lb-arrow { flex: none; font-size: 1.2rem; }
+
+  /* directions block (remote -> homey etc.) */
+  .ways { display: grid; gap: 12px; margin-top: 14px; }
+  .way { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; background: var(--surface-2); }
+  .way .wl { font-weight: 700; font-size: .95rem; display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+  .way .wl .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; }
+  .way p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+
+  /* trouble */
+  .trouble { margin-top: 40px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 26px; box-shadow: var(--shadow); }
+  .trouble h2 {
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 1.32rem;
+    letter-spacing: -.015em; margin: 0 0 6px;
+  }
+  .trouble dl { margin: 18px 0 0; display: grid; gap: 16px; }
+  .trouble dt { font-weight: 700; display: flex; gap: 9px; align-items: baseline; }
+  .trouble dt .q { color: var(--warn); font-family: "IBM Plex Mono", monospace; }
+  .trouble dd { margin: 5px 0 0 22px; color: var(--ink-soft); }
+
+  footer {
+    margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--line);
+    display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; justify-content: space-between;
+    color: var(--ink-soft); font-size: .9rem;
+  }
+  footer a { color: var(--accent-ink); font-weight: 600; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 480px) {
+    body { font-size: 16px; }
+    .step { padding: 22px 18px; border-radius: 15px; }
+    .num { width: 40px; height: 40px; font-size: 1.2rem; border-radius: 11px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .linkbtn { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brandmark">
+      <svg width="26" height="34" viewBox="0 0 60 88" aria-hidden="true">
+        <defs>
+          <mask id="cut">
+            <rect x="6" y="2" width="48" height="84" rx="16" fill="#fff"/>
+            <rect x="14" y="12" width="32" height="22" rx="5" fill="#000"/>
+            <circle cx="30" cy="49" r="10" fill="#000"/><circle cx="30" cy="49" r="4" fill="#fff"/>
+            <circle cx="20" cy="66" r="3" fill="#000"/><circle cx="30" cy="66" r="3" fill="#000"/><circle cx="40" cy="66" r="3" fill="#000"/>
+            <rect x="16" y="74" width="9" height="6" rx="2" fill="#000"/><rect x="35" y="74" width="9" height="6" rx="2" fill="#000"/>
+          </mask>
+        </defs>
+        <rect x="6" y="2" width="48" height="84" rx="16" fill="currentColor" mask="url(#cut)"/>
+      </svg>
+      RepairGuyDK · Homey App
+    </div>
+    <h1>Set up <span class="accent">SofaBaton&nbsp;X2</span> on Homey</h1>
+    <p class="lede">Follow these steps in order and your remote will be talking to Homey in about 15 minutes.</p>
+    <div class="meta">
+      <span>⏱️ ~15 minutes</span>
+      <span>🧩 Beginner friendly</span>
+      <span>📶 Same Wi-Fi for all</span>
+    </div>
+  </header>
+
+  <section class="need">
+    <h2>Before you start, you need:</h2>
+    <ul>
+      <li><span class="tick"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.3L13 4.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div>A <b>Homey Pro</b> — this app runs locally on Homey Pro.</div></li>
+      <li><span class="tick"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.3L13 4.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div>Your <b>SofaBaton X2 hub</b>, plugged in and on your Wi-Fi.</div></li>
+      <li><span class="tick"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.3L13 4.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div>The <b>SofaBaton app</b> on your phone (the one you set the hub up with).</div></li>
+      <li><span class="tick"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.3L13 4.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div>About <b>15 minutes</b> and a cup of coffee ☕</div></li>
+    </ul>
+  </section>
+
+  <div class="steps">
+
+    <section class="step">
+      <div class="step-head"><div class="num"></div><h3>Set up the “post office”</h3></div>
+      <p>Homey and your SofaBaton send messages to each other through a little middleman called an <b>MQTT broker</b>. Think of it as a post office they both drop letters at. The easiest way is to run one right on your Homey.</p>
+      <ol class="do">
+        <li>In the Homey app, open <span class="path">Apps</span>, search for <b>“MQTT Broker”</b>, and tap <b>Install</b>.</li>
+        <li>Open the MQTT Broker app and make sure it says <b>running</b>.</li>
+        <li>Note the <b>port</b> — it’s usually <span class="chip">1883</span>.</li>
+      </ol>
+      <div class="note tip"><span class="ic">💡</span><div><b>Already have a broker?</b> If you run Mosquitto on a Raspberry Pi or NAS, you can use that instead — just remember its address and port.</div></div>
+    </section>
+
+    <section class="step">
+      <div class="step-head"><div class="num"></div><h3>Tell your SofaBaton where the post office is</h3></div>
+      <p>Now point your remote’s hub at that same broker, so it starts dropping its messages there.</p>
+      <ol class="do">
+        <li>On your phone, open the <b>SofaBaton app</b>.</li>
+        <li>Go to your <b>hub’s settings</b> → <span class="path">MQTT / Home Assistant</span>.</li>
+        <li>Type in the broker’s <b>address</b> (your Homey’s IP) and <b>port</b> <span class="chip">1883</span>.</li>
+        <li>Tap <b>Save</b>.</li>
+      </ol>
+      <div class="note tip"><span class="ic">🔎</span><div><b>Where’s my Homey’s IP?</b> Homey app → <span class="path">More → Settings → General</span> (or look in the MQTT Broker app). It looks like <span class="chip">192.168.1.42</span>.</div></div>
+    </section>
+
+    <section class="step">
+      <div class="step-head"><div class="num"></div><h3>Install the app on Homey</h3></div>
+      <p>Open this link on your phone or computer, sign in to your Homey, and install:</p>
+      <a class="linkbtn" href="https://homey.app/a/com.repairguydk.sofabatonx2/test/" target="_blank" rel="noopener">
+        <span class="lb-text">
+          <span class="lb-label">Install link</span>
+          <span class="lb-url">homey.app/a/com.repairguydk.sofabatonx2/test/</span>
+        </span>
+        <span class="lb-arrow">↗</span>
+      </a>
+      <ol class="do">
+        <li>Open the link above.</li>
+        <li><b>Log in</b> to your Homey account.</li>
+        <li>Tap <b>Install</b>. That’s it — the app is on your Homey. 🎉</li>
+      </ol>
+    </section>
+
+    <section class="step">
+      <div class="step-head"><div class="num"></div><h3>Add your SofaBaton to Homey</h3></div>
+      <ol class="do">
+        <li>In the Homey app: <span class="path">Devices → ＋ Add device → SofaBaton X2 → SofaBaton Hub</span>.</li>
+        <li>Homey looks for your hub. When <b>“X2 HUB — …”</b> pops up, pick it — the hub’s ID fills in by itself. ✨
+          <ul><li>Don’t see it? Choose <b>“SofaBaton X2 (manual setup)”</b> instead.</li></ul>
+        </li>
+        <li>Open the new device’s <b>Settings</b> (the ⚙️ gear) and check:
+          <ul>
+            <li><b>Broker address</b> — already set to your Homey’s IP 👍</li>
+            <li><b>Port</b> — set it to match your broker (<span class="chip">1883</span>)</li>
+            <li><b>Username / Password</b> — only if your broker asks for them, otherwise leave blank</li>
+          </ul>
+        </li>
+        <li>Tap <b>Save</b>. The device turns on and connects. 🎉</li>
+      </ol>
+    </section>
+
+    <section class="step">
+      <div class="step-head"><div class="num"></div><h3>Load your devices and buttons</h3></div>
+      <p>On the SofaBaton device card in Homey, tap <b>“Refresh devicelist”</b>. After a few seconds your real devices and keys (TV, fan, and so on) show up in the app’s dropdowns.</p>
+      <div class="note warn"><span class="ic">🔌</span><div><b>Names showing as “Device 3 / Key 5”?</b> The hub’s list was asleep. <b>Unplug the hub for about 10 seconds</b>, plug it back in, wait a minute, then tap <b>Refresh</b> again.</div></div>
+    </section>
+
+    <section class="step">
+      <div class="step-head"><div class="num"></div><h3>Try it out!</h3></div>
+      <p>You’re ready. Here are the two things you can do — both from the <b>Flow</b> editor:</p>
+      <div class="ways">
+        <div class="way">
+          <div class="wl"><span class="dot"></span>Remote → Homey</div>
+          <p><b>When</b> a SofaBaton button is pressed → <b>Then</b> do anything in Homey. Press a new MQTT button once so it appears in the list.</p>
+        </div>
+        <div class="way">
+          <div class="wl"><span class="dot"></span>Homey → your gear</div>
+          <p>A <b>Then</b> action: <span class="chip">On [device]: press [key]</span> — for example, turn your fan on straight from Homey.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <section class="trouble">
+    <h2>If something isn’t right</h2>
+    <dl>
+      <div>
+        <dt><span class="q">→</span> The device stays grey / “cannot reach broker”</dt>
+        <dd>Double-check the broker address and port, and that the SofaBaton app points at the <b>same</b> broker.</dd>
+      </div>
+      <div>
+        <dt><span class="q">→</span> My button presses don’t reach Homey</dt>
+        <dd>Only buttons on the SofaBaton <b>“MQTT” device</b> are sent to Homey. In the SofaBaton app, map the buttons you want to that device.</dd>
+      </div>
+      <div>
+        <dt><span class="q">→</span> Device names won’t load</dt>
+        <dd>Power-cycle the hub (unplug ~10 s), wait a minute, then tap <b>Refresh devicelist</b> on the device card.</dd>
+      </div>
+      <div>
+        <dt><span class="q">→</span> The SofaBaton phone app feels slow while Homey is connected</dt>
+        <dd>Turn on <b>Pause</b> in the device’s settings, do your edits in the SofaBaton app, then turn Pause off again.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <footer>
+    <span>Made with ❤️ by <b>RepairGuyDK</b></span>
+    <span>Stuck? <a href="mailto:repairguydk@gmail.com">repairguydk@gmail.com</a></span>
+  </footer>
+</div>
+</body>
+</html>
