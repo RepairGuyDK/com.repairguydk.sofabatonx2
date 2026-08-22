@@ -48,3 +48,7 @@ https://repairguydk.github.io/com.repairguydk.sofabatonx2/
 ## Support
 
 Questions or bugs? repairguydk@gmail.com
+
+--
+
+Made with Danish temper and Spanish red wine by RepairGuyDK.

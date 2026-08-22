@@ -52,3 +52,7 @@ Questions or bugs? repairguydk@gmail.com
 ## License
 
 MIT
+
+---
+
+*Made with 🇩🇰 Danish temper and 🇪🇸 Spanish red wine by RepairGuyDK.*
