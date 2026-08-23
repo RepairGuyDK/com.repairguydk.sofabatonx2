@@ -18,5 +18,8 @@
   },
   "1.0.5": {
     "en": "moved icons "
+  },
+  "1.0.6": {
+    "en": "Pause switch now has a clear label on the device card"
   }
 }
