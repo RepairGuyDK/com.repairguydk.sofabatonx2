@@ -3,7 +3,7 @@
   "broker_offline": "MQTT-broker offline",
   "cannot_reach_broker": "Kan ikke nå brokeren",
   "configure_prompt": "Åbn indstillinger og indtast broker-adresse og hub-MAC",
-  "paused": "På pause — hub'en er sluppet fri til SofaBaton-appen",
+  "paused": "På pause — hub'en er sluppet fri til SofaBaton-appen. Tryk på \"Pause hub-forbindelse\" igen for at genforbinde.",
   "pair": {
     "error_host": "Indtast venligst brokerens adresse",
     "error_mac": "Indtast venligst hub'ens MAC-adresse"

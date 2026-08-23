@@ -31,21 +31,20 @@ module.exports = class HubDevice extends Homey.Device {
       await this.addCapability('pause').catch((err: Error) => this.error(err));
     }
 
-    // Reflect the stored "paused" setting on the card switch so both agree.
-    await this.setCapabilityValue('pause', this.getSetting('paused') === true)
-      .catch((err: Error) => this.error(err));
-
     // "Refresh devicelist" button on the device card. Run in the background and
     // return immediately — warm-up can exceed Homey's 10s capability timeout.
     this.registerCapabilityListener('refresh_devices', async () => {
       this.refreshCatalog().catch((err: Error) => this.error(err));
     });
 
-    // "Pause connection" switch on the device card — a one-tap shortcut for the
-    // same thing as the "paused" setting (release the single-client hub for the
-    // SofaBaton phone app).
-    this.registerCapabilityListener('pause', async (value: boolean) => {
-      await this.applyPause(value === true);
+    // "Pause hub connection" button on the device card — a one-tap shortcut for
+    // the "paused" setting (release the single-client hub for the SofaBaton
+    // phone app). It's a momentary button (the only card control that shows a
+    // text label), so each press flips the current paused state; a warning
+    // banner shows when we're paused.
+    this.registerCapabilityListener('pause', async () => {
+      const nowPaused = !(this.getSetting('paused') === true);
+      await this.applyPause(nowPaused);
     });
 
     await this.connectClient();
@@ -63,12 +62,10 @@ module.exports = class HubDevice extends Homey.Device {
     const settings = this.getSettings() as HubSettings;
 
     if (settings.paused) {
-      // Paused on purpose: stay AVAILABLE (so the "Pause connection" switch on
-      // the card stays usable — an unavailable device's controls are disabled)
-      // but don't open a connection. The switch being ON is the paused state.
-      if (this.hasCapability('pause')) {
-        await this.setCapabilityValue('pause', true).catch((err: Error) => this.error(err));
-      }
+      // Paused on purpose: stay AVAILABLE (so the "Pause hub connection" button
+      // on the card stays pressable — an unavailable device's controls are
+      // disabled) but don't open a connection. A warning banner shows the state.
+      await this.setWarning(this.homey.__('paused')).catch((err: Error) => this.error(err));
       return;
     }
 
@@ -114,6 +111,7 @@ module.exports = class HubDevice extends Homey.Device {
     try {
       await this.client.connect();
       await this.setAvailable();
+      await this.unsetWarning().catch((err: Error) => this.error(err));
       // Only fetch the full catalog when nothing is cached yet. The hub's query
       // bridge is fragile and shared with the SofaBaton phone app, so once we
       // have a cached list we stay quiet and serve autocompletes from it.
@@ -145,20 +143,18 @@ module.exports = class HubDevice extends Homey.Device {
       await this.client.disconnect().catch((err: Error) => this.error(err));
       this.client = null;
     }
-    // Stay available so the card switch remains operable; the switch being ON
-    // signals "paused". (setUnavailable would grey out the switch → no way back.)
-    await this.setCapabilityValue('pause', true).catch((err: Error) => this.error(err));
+    // Stay available so the card button remains pressable; a warning banner
+    // shows the paused state. (setUnavailable would grey out the button → no
+    // way to press it again to reconnect.)
+    await this.setWarning(this.homey.__('paused')).catch((err: Error) => this.error(err));
   }
 
   /**
-   * Apply a paused/unpaused state from either surface (the card switch or the
-   * "paused" setting) and keep both in sync. setSettings() from device code
-   * does not re-fire onSettings, so there is no feedback loop here.
+   * Apply a paused/unpaused state from either surface (the card button or the
+   * "paused" setting) and keep the setting in sync. setSettings() from device
+   * code does not re-fire onSettings, so there is no feedback loop here.
    */
   private async applyPause(paused: boolean): Promise<void> {
-    if (this.getCapabilityValue('pause') !== paused) {
-      await this.setCapabilityValue('pause', paused).catch((err: Error) => this.error(err));
-    }
     if ((this.getSetting('paused') === true) !== paused) {
       await this.setSettings({ paused }).catch((err: Error) => this.error(err));
     }
@@ -167,7 +163,8 @@ module.exports = class HubDevice extends Homey.Device {
       await this.pause();
     } else {
       // Un-pausing usually means the user just edited devices in the phone app,
-      // so reconnect and refresh the catalog to pick up any changes.
+      // so clear the banner, reconnect and refresh to pick up any changes.
+      await this.unsetWarning().catch((err: Error) => this.error(err));
       await this.reconnect();
       await this.refreshCatalog().catch((err: Error) => this.error(err));
     }
