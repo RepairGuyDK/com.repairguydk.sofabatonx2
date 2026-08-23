@@ -27,5 +27,8 @@
   },
   "1.0.8": {
     "en": "English pause label, hub reboot tip, and a setup-guide link on the app page"
+  },
+  "1.0.9": {
+    "en": "Added unofficial-community-app disclaimer"
   }
 }
