@@ -50,8 +50,11 @@ https://repairguydk.github.io/com.repairguydk.sofabatonx2/
   power-cycle the hub (unplug ~10 s), wait a minute, then tap "Refresh
   devicelist" again.
 - Editing devices in the SofaBaton phone app while Homey is connected can be
-  slow (the hub allows one client at a time). Turn on "Pause" in the device
-  settings to release the hub, then turn it off again.
+  slow (the hub allows one client at a time). Tap "Pause hub connection" on the
+  device to release the hub, then tap it again to reconnect.
+- The hub is a small, modestly-powered device. After a lot of tinkering it can
+  get overwhelmed and stop responding - a hard reboot (unplug ~10 s, wait a
+  minute) almost always fixes it.
 - Only buttons mapped to the SofaBaton "MQTT" device reach Homey.
 
 ## Support
