@@ -360,7 +360,7 @@
       "type": "boolean",
       "title": {
         "en": "Pause hub connection",
-        "da": "Pause hub-forbindelse"
+        "da": "Pause hub connection"
       },
       "getable": false,
       "setable": true,

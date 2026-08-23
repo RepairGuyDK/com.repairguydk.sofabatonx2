@@ -1,6 +1,6 @@
 {
   "type": "boolean",
-  "title": { "en": "Pause hub connection", "da": "Pause hub-forbindelse" },
+  "title": { "en": "Pause hub connection", "da": "Pause hub connection" },
   "getable": false,
   "setable": true,
   "uiComponent": "button",
