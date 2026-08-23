@@ -3,6 +3,9 @@
 Bring your **SofaBaton X2** universal remote into Homey over MQTT. Control your
 devices from Homey Flows, and use the remote's buttons to trigger Homey Flows.
 
+> 📖 **New here? Start with the illustrated step-by-step setup guide:**
+> https://repairguydk.github.io/com.repairguydk.sofabatonx2/
+
 ## What it does
 
 - **Homey → SofaBaton** — a Flow action, *"On [device]: press [key]"*, sends
