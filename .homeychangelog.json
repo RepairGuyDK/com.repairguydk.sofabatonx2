@@ -24,5 +24,8 @@
   },
   "1.0.7": {
     "en": "Corrected english translation"
+  },
+  "1.0.8": {
+    "en": "English pause label, hub reboot tip, and a setup-guide link on the app page"
   }
 }
