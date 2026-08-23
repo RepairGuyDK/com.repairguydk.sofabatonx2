@@ -12,8 +12,8 @@
     "da": "SofaBaton X2"
   },
   "description": {
-    "en": "Connect your SofaBaton X2 universal remote to Homey over MQTT — control your devices from Homey and use the remote's buttons to trigger Homey Flows.",
-    "da": "Forbind din SofaBaton X2-universalfjernbetjening til Homey via MQTT — styr dine apparater fra Homey, og brug fjernbetjeningens knapper til at udløse Homey-Flows."
+    "en": "Connect your SofaBaton X2 universal remote to Homey over MQTT — control your devices from Homey and use the remote's buttons to trigger Homey Flows. Unofficial community app, not affiliated with SofaBaton.",
+    "da": "Forbind din SofaBaton X2-universalfjernbetjening til Homey via MQTT — styr dine apparater fra Homey, og brug fjernbetjeningens knapper til at udløse Homey-Flows. Uofficiel community-app, ikke tilknyttet SofaBaton."
   },
   "category": [
     "video"

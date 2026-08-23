@@ -64,6 +64,12 @@ https://repairguydk.github.io/com.repairguydk.sofabatonx2/
 
 Questions or bugs? repairguydk@gmail.com
 
+## Disclaimer
+
+This is an unofficial community app. It is not affiliated with, authorised by, or
+endorsed by SofaBaton. "SofaBaton" and "X2" are trademarks of their respective
+owners and are used here only to describe what the app connects to.
+
 --
 
 Made with Danish temper and Spanish red wine by RepairGuyDK.
