@@ -12,5 +12,8 @@
   "1.0.3": {
     "en": "New: a \"Pause connection\" switch right on the device — release the hub for the SofaBaton app with one tap, no need to dig into settings. Thanks to Ib Thomsen for the suggestion!",
     "da": "Nyt: en \"Pause forbindelse\"-kontakt direkte på enheden — slip hub'en til SofaBaton-appen med ét tryk, uden at gå ind i indstillinger. Tak til Ib Thomsen for forslaget!"
+  },
+  "1.0.4": {
+    "en": "added pause button next to refresh on device card"
   }
 }
