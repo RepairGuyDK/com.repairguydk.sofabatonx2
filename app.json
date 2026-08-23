@@ -359,13 +359,12 @@
     "pause": {
       "type": "boolean",
       "title": {
-        "en": "Pause connection",
-        "da": "Pause forbindelse"
+        "en": "Pause hub connection",
+        "da": "Pause hub-forbindelse"
       },
       "getable": true,
       "setable": true,
       "uiComponent": "toggle",
-      "uiQuickAction": true,
       "insights": false
     },
     "refresh_devices": {
