@@ -1,0 +1,4 @@
+# Not part of the published app -- keeps the bundle to what Homey actually needs.
+README.md
+photos/
+tools/

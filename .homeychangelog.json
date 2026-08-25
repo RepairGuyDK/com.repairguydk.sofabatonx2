@@ -30,5 +30,9 @@
   },
   "1.0.9": {
     "en": "Added unofficial-community-app disclaimer"
+  },
+  "1.0.10": {
+    "en": "A clearer app page, a link to the illustrated setup guide, and new app and device images.",
+    "da": "Klarere app-side, link til den illustrerede opsætningsguide og nye app- og enhedsbilleder."
   }
 }
