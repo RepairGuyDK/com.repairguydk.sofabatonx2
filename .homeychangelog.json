@@ -34,5 +34,9 @@
   "1.0.10": {
     "en": "A clearer app page, a link to the illustrated setup guide, and new app and device images.",
     "da": "Klarere app-side, link til den illustrerede opsætningsguide og nye app- og enhedsbilleder."
+  },
+  "1.0.11": {
+    "en": "New “And” cards for Flows: check whether the hub connection is paused, and whether the last pressed button was a specific one. Device and key dropdowns now also work while the connection is paused. Thanks to Aaron Powell for asking!",
+    "da": "Nye “Og”-kort til Flows: tjek om hub-forbindelsen er på pause, og om det sidste knaptryk var en bestemt tast. Enheds- og tastelisterne virker nu også, mens forbindelsen er på pause. Tak til Aaron Powell for spørgsmålet!"
   }
 }

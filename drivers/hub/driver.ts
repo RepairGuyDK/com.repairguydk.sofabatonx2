@@ -1,10 +1,16 @@
 'use strict';
 
 import Homey from 'homey';
-import { SofaBatonMqtt, KeyEvent } from '../../lib/sofabaton-mqtt';
+import {
+  SofaBatonMqtt, KeyEvent, SofaDevice, SofaKey,
+} from '../../lib/sofabaton-mqtt';
 
 interface HubDeviceLike extends Homey.Device {
   getClient(): SofaBatonMqtt;
+  isPaused(): boolean;
+  getLastEvent(): { deviceId: number; keyId: number } | null;
+  getCachedDevices(): SofaDevice[];
+  getCachedKeys(deviceId: number): SofaKey[];
 }
 
 interface AutocompleteItem {
@@ -20,6 +26,7 @@ module.exports = class HubDriver extends Homey.Driver {
 
   async onInit(): Promise<void> {
     this.registerTriggers();
+    this.registerConditions();
     this.registerActions();
   }
 
@@ -70,6 +77,37 @@ module.exports = class HubDriver extends Homey.Driver {
     this.anyButtonPressedTrigger.trigger(tokens).catch((err: Error) => this.error(err));
   }
 
+  // --- Conditions ---
+
+  private registerConditions(): void {
+    // "The hub connection is/is not paused" — lets a Flow skip its SofaBaton
+    // actions (or warn) while the hub is released to the phone app.
+    const isPaused = this.homey.flow.getConditionCard('is_paused');
+    isPaused.registerRunListener(async (args: { device: HubDeviceLike }) =>
+      args.device.isPaused());
+
+    // "The last pressed button was/was not [device] · [key]".
+    const lastButtonIs = this.homey.flow.getConditionCard('last_button_is');
+    lastButtonIs.registerRunListener(
+      async (args: { device: HubDeviceLike; sb_device?: AutocompleteItem; key?: AutocompleteItem }) => {
+        const last = args.device.getLastEvent();
+        return !!last
+          && !!args.sb_device
+          && !!args.key
+          && Number(args.sb_device.id) === Number(last.deviceId)
+          && Number(args.key.id) === Number(last.keyId);
+      },
+    );
+    lastButtonIs
+      .getArgument('sb_device')
+      .registerAutocompleteListener((query: string, args: { device?: HubDeviceLike }) =>
+        this.deviceAutocomplete(query, args));
+    lastButtonIs
+      .getArgument('key')
+      .registerAutocompleteListener((query: string, args: { device?: HubDeviceLike; sb_device?: AutocompleteItem }) =>
+        this.keyAutocomplete(query, args));
+  }
+
   // --- Actions ---
 
   private registerActions(): void {
@@ -111,11 +149,12 @@ module.exports = class HubDriver extends Homey.Driver {
       if (!device) {
         return [];
       }
-      const client = device.getClient();
-      let list = client.getDevices();
+      // Serve from the cache first — it is persisted, so the dropdowns also work
+      // while the connection is paused or the hub's list query is asleep.
+      let list = device.getCachedDevices();
       if (list.length === 0) {
         // Only reach out to the hub when we have nothing cached (gentle).
-        list = await client.fetchDevices();
+        list = await device.getClient().fetchDevices();
       }
       const all = list.map((d) => ({ id: String(d.id), name: d.name }));
       return HubDriver.filterAutocomplete(all, query);
@@ -152,10 +191,9 @@ module.exports = class HubDriver extends Homey.Driver {
         return [];
       }
       const deviceId = Number(args.sb_device.id);
-      const client = device.getClient();
-      let keys = client.getDeviceKeys(deviceId);
+      let keys = device.getCachedKeys(deviceId);
       if (keys.length === 0) {
-        keys = await client.fetchDeviceKeys(deviceId);
+        keys = await device.getClient().fetchDeviceKeys(deviceId);
       }
       const all = keys.map((k) => ({ id: String(k.id), name: k.name }));
       return HubDriver.filterAutocomplete(all, query);

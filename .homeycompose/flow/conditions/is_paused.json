@@ -1,0 +1,14 @@
+{
+  "title": { "en": "Hub connection is paused", "da": "Hub-forbindelsen er på pause" },
+  "titleFormatted": {
+    "en": "The hub connection !{{is|is not}} paused",
+    "da": "Hub-forbindelsen !{{er|er ikke}} på pause"
+  },
+  "hint": {
+    "en": "True while the connection to the hub is paused (released for the SofaBaton phone app).",
+    "da": "Sand mens forbindelsen til hub'en er på pause (sluppet fri til SofaBaton-appen)."
+  },
+  "args": [
+    { "type": "device", "name": "device", "filter": "driver_id=hub" }
+  ]
+}

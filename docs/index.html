@@ -52,6 +52,8 @@
   }
 
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  #flowcards { scroll-margin-top: 16px; }
   body {
     margin: 0;
     background: var(--paper);
@@ -201,6 +203,33 @@
   }
   .shot figcaption b { color: var(--warn-ink); }
 
+  /* flow card overview */
+  .cards { margin-top: 40px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 26px; box-shadow: var(--shadow); }
+  .cards h2 {
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 1.32rem;
+    letter-spacing: -.015em; margin: 0 0 6px;
+  }
+  .cards > p { margin: 10px 0 0; color: var(--ink-soft); }
+  .cardlist { display: grid; gap: 14px; margin-top: 20px; }
+  .cardrow {
+    display: grid; grid-template-columns: 74px 1fr; gap: 16px; align-items: start;
+    border: 1px solid var(--line); border-radius: 12px; padding: 15px 16px; background: var(--surface-2);
+  }
+  .cardrow .tag {
+    font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: .8rem;
+    text-align: center; padding: 5px 0; border-radius: 8px;
+    background: var(--accent-soft); color: var(--accent-ink); border: 1px solid var(--line);
+  }
+  .cardrow .tag.then { background: var(--mono-bg); color: var(--mono-ink); }
+  .cardrow p { margin: 0; }
+  .cardrow p + p { margin-top: 8px; }
+  .cardrow .chip { display: inline-block; margin: 2px 4px 2px 0; white-space: normal; }
+  .cardrow .where { color: var(--ink-soft); font-size: .93rem; line-height: 1.5; }
+  @media (max-width: 480px) {
+    .cardrow { grid-template-columns: 1fr; gap: 9px; }
+    .cardrow .tag { justify-self: start; padding: 4px 14px; }
+  }
+
   /* trouble */
   .trouble { margin-top: 40px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 26px; box-shadow: var(--shadow); }
   .trouble h2 {
@@ -211,6 +240,7 @@
   .trouble dt { font-weight: 700; display: flex; gap: 9px; align-items: baseline; }
   .trouble dt .q { color: var(--warn); font-family: "IBM Plex Mono", monospace; }
   .trouble dd { margin: 5px 0 0 22px; color: var(--ink-soft); }
+  .trouble dd a { color: var(--accent-ink); font-weight: 600; }
 
   footer {
     margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--line);
@@ -227,6 +257,7 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .linkbtn { transition: none; }
+    html { scroll-behavior: auto; }
   }
 </style>
 </head>
@@ -409,7 +440,7 @@
 
     <section class="step">
       <div class="step-head"><div class="num"></div><h3>Try it out!</h3></div>
-      <p>You’re ready. Here are the two things you can do — both from the <b>Flow</b> editor:</p>
+      <p>You’re ready. Here are the two things you can do — both from the <b>Flow</b> editor (a full card-by-card overview follows below):</p>
       <div class="ways">
         <div class="way">
           <div class="wl"><span class="dot"></span>Remote → Homey</div>
@@ -424,12 +455,50 @@
 
   </div>
 
+  <section class="cards" id="flowcards">
+    <h2>Where to find the Flow cards</h2>
+    <p>A Homey Flow is built from three columns — <b>When</b>, <b>And</b> and <b>Then</b>. Here is everything this app adds, and where each card is hiding.</p>
+
+    <div class="cardlist">
+      <div class="cardrow">
+        <div class="tag">When</div>
+        <div>
+          <p><span class="chip">A specific button was pressed</span><span class="chip">Any button was pressed</span></p>
+          <p class="where">These live under the <b>SofaBaton X2 app itself</b> — not under the hub device. Tap <b>+</b> in the <b>When</b> column and type <b>“pressed”</b>, or scroll down the list to the app’s own icon. Both cards hand you the tags <b>Device</b>, <b>Key</b>, <b>Device ID</b> and <b>Key ID</b> to use later in the Flow.</p>
+        </div>
+      </div>
+
+      <div class="cardrow">
+        <div class="tag">And</div>
+        <div>
+          <p><span class="chip">The hub connection is / is not paused</span><span class="chip">The last pressed button was / was not …</span></p>
+          <p class="where">Pick the <b>SofaBaton hub device</b> in the <b>And</b> column. Handy for “only do this if the connection isn’t paused”, or for reacting differently depending on which button was pressed last.</p>
+        </div>
+      </div>
+
+      <div class="cardrow">
+        <div class="tag then">Then</div>
+        <div>
+          <p><span class="chip">On [device], press [key]</span></p>
+          <p class="where">Pick the <b>SofaBaton hub device</b> in the <b>Then</b> column, then choose which of your devices and which key to fire — infrared, RF or Bluetooth, whatever the hub can reach.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="note tip"><span class="ic">💡</span><div><b>Only seeing “Then” cards?</b> That is the usual surprise. Only the action card belongs to the device — the two <b>When</b> cards belong to the app, because the hub speaks to Homey as one unit. So start the <b>When</b> column from the app, not from the device.</div></div>
+    <div class="note warn"><span class="ic">📡</span><div><b>Nothing in the dropdowns yet?</b> Only buttons on the SofaBaton <b>“MQTT” device</b> reach Homey. Add that device in the SofaBaton app and press a key once — it then appears here with its real name.</div></div>
+  </section>
+
   <section class="trouble">
     <h2>If something isn’t right</h2>
     <dl>
       <div>
         <dt><span class="q">→</span> The device stays grey / “cannot reach broker”</dt>
         <dd>Make sure the MQTT Broker app shows <b>“Broker is Running”</b> (press <b>Start Broker</b> if not). Double-check the broker address and port, and that the SofaBaton app points at the <b>same</b> broker. If it still won’t connect, <b>create a username &amp; password</b> in the broker and enter the <b>same</b> ones on the device — the hub often refuses to connect without a real login, even with “Disable user authentication” on.</dd>
+      </div>
+      <div>
+        <dt><span class="q">→</span> I can only find “Then” cards in the Flow editor</dt>
+        <dd>The <b>When</b> cards sit under the <b>app</b>, not under the device. In the <b>When</b> column tap <b>+</b> and type <b>“pressed”</b>, or look for the SofaBaton X2 icon in the list. See <a href="#flowcards">Where to find the Flow cards</a> above.</dd>
       </div>
       <div>
         <dt><span class="q">→</span> My button presses don’t reach Homey</dt>

@@ -18,7 +18,14 @@ module.exports = class HubDevice extends Homey.Device {
 
   private client: SofaBatonMqtt | null = null;
 
+  /** Most recent key press received from the hub (used by flow conditions). */
+  private lastEvent: { deviceId: number; keyId: number } | null = null;
+
   async onInit(): Promise<void> {
+    // Survive restarts: the "last pressed button" condition should still
+    // know what was pressed before the app was updated or rebooted.
+    this.lastEvent = (this.getStoreValue('lastEvent') as { deviceId: number; keyId: number } | null) || null;
+
     // Migrate existing devices that were paired before these capabilities
     // existed (updating an app does not retro-add capabilities).
     if (!this.hasCapability('last_button')) {
@@ -56,6 +63,39 @@ module.exports = class HubDevice extends Homey.Device {
       throw new Error('SofaBaton hub is not connected');
     }
     return this.client;
+  }
+
+  /** Is the connection to the hub currently paused? (used by flow conditions) */
+  isPaused(): boolean {
+    return this.getSetting('paused') === true;
+  }
+
+  /** The most recent key press, or null if none seen yet (used by flow conditions). */
+  getLastEvent(): { deviceId: number; keyId: number } | null {
+    return this.lastEvent;
+  }
+
+  /**
+   * The known device list, served from the live client when connected and from
+   * the persisted store otherwise — so Flow dropdowns keep working while the
+   * connection is paused or the hub's flaky list query is asleep.
+   */
+  getCachedDevices(): SofaDevice[] {
+    const live = this.client ? this.client.getDevices() : [];
+    if (live.length > 0) {
+      return live;
+    }
+    return (this.getStoreValue('sofaDevices') as SofaDevice[] | null) || [];
+  }
+
+  /** The known keys for one device, from the live client or the persisted store. */
+  getCachedKeys(deviceId: number): SofaKey[] {
+    const live = this.client ? this.client.getDeviceKeys(deviceId) : [];
+    if (live.length > 0) {
+      return live;
+    }
+    const all = (this.getStoreValue('sofaKeys') as Record<string, SofaKey[]> | null) || {};
+    return all[String(deviceId)] || [];
   }
 
   private async connectClient(): Promise<void> {
@@ -173,6 +213,10 @@ module.exports = class HubDevice extends Homey.Device {
   private onKeyEvent(event: KeyEvent): void {
     // Show just the key name on the tile (e.g. "Milo gåtur"), not "MQTT · …".
     this.setCapabilityValue('last_button', event.keyName).catch((err: Error) => this.error(err));
+
+    // Remember it (and persist it) for the "Last pressed button" condition.
+    this.lastEvent = { deviceId: event.deviceId, keyId: event.keyId };
+    this.setStoreValue('lastEvent', this.lastEvent).catch((err: Error) => this.error(err));
 
     const driver = this.driver as unknown as {
       triggerButtonPressed: (device: Homey.Device, event: KeyEvent) => void;
